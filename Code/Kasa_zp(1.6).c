@@ -16,8 +16,9 @@ void sort_nazw();	            //wyswietlanie listy klientów posortowanej po naz
 //void sort_kwota();	            //wyswietlanie listy klientów posortowanej po wysokosci pozyczki
 void zadluzenie();	            //sprawdzanie ile zadluzony jest dany klient
 //void splata_teraz();	        //wyswietlanie listy klientów którzy skoncza splacac pozyczke w tym miesiacu
-void menu();		            //funkcja do obslugi interfejsu
 void zapisz();                  //zapisuje baze danych po wprowadzonych zmianach
+void zapisz_p();                //zapisuje baze pozyczek
+void menu();		            //funkcja do obslugi interfejsu
 //void pomocnicze
 void wielka_litera();           //poprawia na wielka litere, reszta male
 int pesel_check();              //sprawdza poprawnosc daty w peselu (nie sprawdza sumy kontrolnej) oraz dlugosc podanego peselu
@@ -508,13 +509,13 @@ void dodaj_klienta(void)
     delay(1000);printf("\n\t.");delay(1000);printf("\n\t.");delay(1000);printf("\n\t.");delay(1000);
     system("cls");
 
-    pom=klient[LK-1].numer1;
+    pom=klient[LK-1].numer1-1;
     dalej='Y';
     do
     {
         if(dalej=='Y')
         {
-            poz[pom].numer=pom;
+            poz[pom].numer=pom+1;
             printf("\n\tPozyczka %d :",nr);
             printf("\n\tKwota \t\t");
             fflush(stdin);
@@ -556,7 +557,7 @@ void dodaj_klienta(void)
         }
         else
         {
-           poz[pom].numer=pom;
+           poz[pom].numer=pom+1;
            poz[pom].kwota=0;
            poz[pom].rok=0;
            poz[pom].miesiac=0;
@@ -730,6 +731,25 @@ void zapisz (void)
     fclose(z);
 }
 
+void zapisz_p (void)
+{
+    FILE *z;
+    z=fopen("bank.txt","w");
+    fprintf(z,"%d",LP);
+
+    for(i=0;i<LP;++i)
+        {
+            fprintf(z,"\n%d",poz[i].numer);
+            fprintf(z,"\t%d",poz[i].kwota);
+            fprintf(z,"\t%d",poz[i].rok);
+            fprintf(z,"\t%d",poz[i].miesiac);
+            fprintf(z,"\t%d",poz[i].dzien);
+            fprintf(z,"\t%d",poz[i].na_ile);
+            fprintf(z,"\t%f",poz[i].procent);
+        }
+    fclose(z);
+}
+
 void menu(void)
 {
     int choice;                 //menu
@@ -755,7 +775,7 @@ void menu(void)
 
         printf("\n(11)	Zapisz");
         printf("\n(12)	Zakoncz");
-        printf("\n(13)	Zakoncz i zapisz");
+        printf("\n(13)	Zapisz i zakoncz");
         printf("\n(14)	Test\n");
         printf("\n\tPodaj numer: ");
         fflush(stdin);
@@ -814,11 +834,13 @@ void menu(void)
         case 11:
             {
                 zapisz();
+                zapisz_p();
                 break;
             }
         case 13:
             {
                 zapisz();
+                zapisz_p();
                 choice=12;
                 break;
             }
