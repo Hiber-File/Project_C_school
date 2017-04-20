@@ -1,11 +1,12 @@
-10
-1	Jan		Kowalski	58050905615	AZI488214	Jaskolcza			134	20-330	Lublin			1	2	3	4	5
-2	Maria		Nowak		88100417320	ARE942424	Korczaka_Janusza		91	45-504	Bedzin			6	7	8	9	10
-3	Bartlomiej	Hojrak		24080300425	AZX009153	Wiezycka 			74	81-045	Gdynia			11	12	13	14	15
-4	Janusz		Europejski	83070314602	AKY634748	Swietego_Marcina		143	61-805	Poznan			16	17	18	19	20
-5	Bartek		Nowodworski	69040409152	AYZ350030	Nad_Odra			35	49-306	Brzeg			21	22	23	24	25
-6	Ignacy		Potocki		96122506175	ATU311482	Byczynska			133	04-310	Warszawa		26	27	28	29	30
-7	Mikolaj		Radziwill	34050412553	AMX801644	Mysliwiecka			82	41-100	Siemanowice_Slaskie	31	32	33	34	35
-8	Eligiusz	Piotrowski	94041601333	ANG624902	Dolna				10	91-455	Lodz			36	37	38	39	40
-9	Nikodem		Nowakowski	53121216928	ABT843483	Mlotkow				69	31-983	Krakow			41	42	43	44	45
-10	Cezar		Sawicki		79083103971	AGN942639	Kardynala_Wyszynskiego_Stefana	10	50-307	Wroclaw			46	47	48	49	50
+11
+1	Jan	Kowalski	58050905615	AZI488214	Jaskolcza	134	20-330	Lublin	1	2	3	4	5
+2	Maria	Nowak	88100417320	ARE942424	Korczaka_Janusza	91	45-504	Bedzin	6	7	8	9	10
+3	Bartlomiej	Hojrak	24080300425	AZX009153	Wiezycka	74	81-045	Gdynia	11	12	13	14	15
+4	Janusz	Europejski	83070314602	AKY634748	Swietego_Marcina	143	61-805	Poznan	16	17	18	19	20
+5	Bartek	Nowodworski	69040409152	AYZ350030	Nad_Odra	35	49-306	Brzeg	21	22	23	24	25
+6	Ignacy	Potocki	96122506175	ATU311482	Byczynska	133	04-310	Warszawa	26	27	28	29	30
+7	Mikolaj	Radziwill	34050412553	AMX801644	Mysliwiecka	82	41-100	Siemanowice_Slaskie	31	32	33	34	35
+8	Eligiusz	Piotrowski	94041601333	ANG624902	Dolna	10	91-455	Lodz	36	37	38	39	40
+9	Nikodem	Nowakowski	53121216928	ABT843483	Mlotkow	69	31-983	Krakow	41	42	43	44	45
+10	Cezar	Sawicki	79083103971	AGN942639	Kardynala_Wyszynskiego_Stefana	10	50-307	Wroclaw	46	47	48	49	50
+11	Maria	Nowaczek	12123112354	QWE145263	Plac_Na_Groblach	9	78-965	Wloclawek	51	52	53	54	55
