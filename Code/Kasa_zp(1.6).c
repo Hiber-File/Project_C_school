@@ -17,19 +17,21 @@ void sort_nazw();	            //wyswietlanie listy klientów posortowanej po naz
 void zadluzenie();	            //sprawdzanie ile zadluzony jest dany klient
 //void splata_teraz();	        //wyswietlanie listy klientów którzy skoncza splacac pozyczke w tym miesiacu
 void menu();		            //funkcja do obslugi interfejsu
-void zapisz();                 //zapisuje baze danych po wprowadzonych zmianach
+void zapisz();                  //zapisuje baze danych po wprowadzonych zmianach
 //void pomocnicze
 void wielka_litera();           //poprawia na wielka litere, reszta male
-int pesel_check();             //sprawdza poprawnosc daty w peselu (nie sprawdza sumy kontrolnej) oraz dlugosc podanego peselu
-int dowod_check();             //sprawdza poprawnosc wpisanego nr dowodu
-void ulica_correct();          //poprawia format wpisanej ulicy/miasta
-int kod_check();               //sprawdza poprawnosc wpisanego kodu pocztowego
+int pesel_check();              //sprawdza poprawnosc daty w peselu (nie sprawdza sumy kontrolnej) oraz dlugosc podanego peselu
+int dowod_check();              //sprawdza poprawnosc wpisanego nr dowodu
+void ulica_correct();           //poprawia format wpisanej ulicy/miasta
+int kod_check();                //sprawdza poprawnosc wpisanego kodu pocztowego
 int alfabet();                  //sprawdza ktory z podanych stringow jest bardziej alfabetyczny
-int oblicz();                  //obliczenia zwiazane z baza pozyczek
+void oblicz();                  //obliczenia zwiazane z baza pozyczek
+void data();                    //pobieranie aktualnej daty od uzytkownika
 void delay();                   //upiekszanie
 
+
+int b_rok,b_miesiac,b_dzien;    //biezaca data          DO ULEPSZENIA
 int i,j,k,l;                    //zmienne pomocnicze
-int data=0;                       //pom zeby nie wpisywac daty wielokrotnie
 int LK;                         //liczba klientow
 int LP;                         //liczba pozyczek
 
@@ -313,7 +315,8 @@ void mod_klienta(void)
 
 void dodaj_klienta(void)
 {
-    int pes=0,dow=0,kod=0;          //zero = true
+    int pes=0,dow=0,kod=0,nr=1,pom;          //zero = true
+    char dalej;                     //czy chcesz pobrac kolejne pozyczki
     ++LK;
     klient[LK-1].ident=klient[LK-2].ident+1;
     system("cls");
@@ -479,6 +482,7 @@ void dodaj_klienta(void)
     klient[LK-1].numer3=klient[LK-1].numer2+1;
     klient[LK-1].numer4=klient[LK-1].numer3+1;
     klient[LK-1].numer5=klient[LK-1].numer4+1;
+    LP=LP+5;
 
     system("cls");
     printf("\n\tDane osobowe:");
@@ -499,6 +503,76 @@ void dodaj_klienta(void)
     printf("\n\t\t\t%d",klient[LK-1].numer3);
     printf("\n\t\t\t%d",klient[LK-1].numer4);
     printf("\n\t\t\t%d",klient[LK-1].numer5);
+
+    printf("\n\n\tPrzydzielanie pozyczki");                   //fun
+    delay(1000);printf("\n\t.");delay(1000);printf("\n\t.");delay(1000);printf("\n\t.");delay(1000);
+    system("cls");
+
+    pom=klient[LK-1].numer1;
+    dalej='Y';
+    do
+    {
+        if(dalej=='Y')
+        {
+            poz[pom].numer=pom;
+            printf("\n\tPozyczka %d :",nr);
+            printf("\n\tKwota \t\t");
+            fflush(stdin);
+            scanf("%d",&poz[pom].kwota);
+
+            poz[pom].rok=b_rok;
+            poz[pom].miesiac=b_miesiac;
+            poz[pom].dzien=b_dzien;
+
+            system("cls");
+            printf("\n\tPozyczka %d :",nr);
+            printf("\n\tKwota \t\t%d",poz[pom].kwota);
+            printf("\n\tData zawarcia umowy %d.%d.%d",poz[pom].rok,poz[pom].miesiac,poz[pom].dzien);
+            printf("\n\tNa ile miesiecy\t");
+            fflush(stdin);
+            scanf("%d",&poz[pom].na_ile);
+
+            system("cls");
+            printf("\n\tPozyczka %d :",nr);
+            printf("\n\tKwota \t\t%d",poz[pom].kwota);
+            printf("\n\tData zawarcia umowy %d.%d.%d",poz[pom].rok,poz[pom].miesiac,poz[pom].dzien);
+            printf("\n\tNa ile miesiecy\t\t%d",poz[pom].na_ile);
+            printf("\n\tNa jaki procent\t");
+            fflush(stdin);
+            scanf("%f",&poz[pom].procent);
+
+            system("cls");
+            printf("\n\tPozyczka %d :",nr);
+            printf("\n\tKwota \t\t%d",poz[pom].kwota);
+            printf("\n\tData zawarcia umowy %d.%d.%d",poz[pom].rok,poz[pom].miesiac,poz[pom].dzien);
+            printf("\n\tNa ile miesiecy\t\t%d",poz[pom].na_ile);
+            printf("\n\tNa jaki procent\t\t%.2f",poz[pom].procent);
+
+
+            printf("\n\tCzy chcesz pobrac kolejna pozyczke? (Y/N)");
+            fflush(stdin);
+            scanf("%c",&dalej);
+            dalej=toupper(dalej);
+        }
+        else
+        {
+           poz[pom].numer=pom;
+           poz[pom].kwota=0;
+           poz[pom].rok=0;
+           poz[pom].miesiac=0;
+           poz[pom].dzien=0;
+           poz[pom].na_ile=0;
+           poz[pom].procent=0;
+        }
+
+    ++nr;
+    ++pom;
+    }while(nr<=5);
+
+    if(nr==6&&dalej=='Y')
+    {
+        printf("\n\tNie mozesz pobrac wiecej pozyczek!!");
+    }
 }
 
 void usun_klienta(void)
@@ -620,7 +694,7 @@ void zadluzenie(void)
     {
         klient[i].dlug=poz[klient[i].numer1].ile_do_splaty+poz[klient[i].numer2].ile_do_splaty+poz[klient[i].numer3].ile_do_splaty+poz[klient[i].numer4].ile_do_splaty+poz[klient[i].numer5].ile_do_splaty;
     }
-    printf("\n\tPodaj numer klienta: \t\t");
+    printf("\n\tPodaj numer klienta: \t");
     fflush(stdin);
     scanf("%d",&id);
     --id;
@@ -663,7 +737,7 @@ void menu(void)
 
     do
     {
-        printf("\n\nNa razie dziala 1,2,3,4,5,6,11,12,13,14");
+        printf("\n\nNa razie dziala 1,2,3,4,5,6,9,11,12,13,14");
         printf("\n(1)	Wyswietl baze klientow");
         printf("\n(2)	Modyfikuj dane klienta");
         printf("\n(3)	Dodaj klienta");
@@ -672,15 +746,12 @@ void menu(void)
         printf("\n(6)	Wyswietl liste klientow posortowana po nazwisku");
         printf("\n(7)	Wyswietl liste klientow posortowana po wysokosci pozyczki");
         printf("\n(8)	Sprawdz ktorzy sposrod klientow koncza splacac pozyczke w tym miesiacu");
-        printf("\n(9)	Sprawdz zadluzenie danego klienta (w podany dzien?)");
+        printf("\n(9)	Sprawdz zadluzenie danego klienta");
         printf("\n(10)	Wybierz dodatkowe opcje:");
 
         //a)	Wyswietl posortowana liste klientow od najbardziej zadluzonego
         //b)	Wyswietl posortowana liste klientow po roku urodzenia
-
         //d)	Znajdz klientow po dacie pozyczki
-        //e)	Wyswietl posortowana liste po ilosci pozyczek na klienta (od 5 do 1)
-        //f)	Znajdz klienta po identyfikatorze
 
         printf("\n(11)	Zapisz");
         printf("\n(12)	Zakoncz");
@@ -732,7 +803,7 @@ void menu(void)
             }
         case 9:
             {
-                data=oblicz(data);
+                oblicz();
                 zadluzenie();
                 break;
             }
@@ -952,7 +1023,7 @@ int dowod_check (char *x)  //hahahaha http://www.algorytm.org/numery-identyfikac
     return check;       //zero = true
 }
 
-void ulica_correct (char *x)
+void ulica_correct (char *x)            //numer?
 {
     int j;
 
@@ -1036,57 +1107,53 @@ int alfabet (char *x,char *y)
     return zam;             //1 jesli x, 0 jesli y
 }
 
-int oblicz (int pom)
+void oblicz (void)
 {
-    int b_rok,b_miesiac,b_dzien;    //biezaca data          DO ULEPSZENIA
+    int pom_m,pom_b;      //pomocniczna liczba miesiecy / ile miesiecy teraz
+    pom_b=(b_rok*12)+b_miesiac;
 
-    if(pom==0)
+    int i,j;
+    for (i=1;i<LP;++i)
     {
-        printf("\n\tPodaj dzisiejsza date:");
-        printf("\n\tRok:");
-        fflush(stdin);
-        scanf("%d",&b_rok);
-        printf("\n\tMiesiac:");
-        fflush(stdin);
-        scanf("%d",&b_miesiac);
-        printf("\n\tDzien:");
-        fflush(stdin);
-        scanf("%d",&b_dzien);
-    //    b_rok=2017;
-    //    b_miesiac=04;
-    //    b_dzien=14;
-        pom=1;
+        poz[i].rata_kap=(float)poz[i].kwota/(float)poz[i].na_ile;
+        //printf("\nrata_kap[%d]=%f",i,poz[i].rata_kap);              //rata kapitalowa
+
+        pom_m=(poz[i].rok*12)+poz[i].miesiac;
+        //printf("\npom_m=%d  pom_b=%d",pom_m,pom_b);
 
 
-        int pom_m,pom_b;      //pomocniczna liczba miesiecy / ile miesiecy teraz
-        pom_b=(b_rok*12)+b_miesiac;
+        poz[i].ile_m_spl = (poz[i].dzien<b_dzien) ? pom_b-pom_m:pom_b-pom_m-1;
+        //printf("\npoz[%d].ile_m_spl=%d",i,poz[i].ile_m_spl);        //ile miesiecy juz splacono
 
-        int i,j;
-        for (i=1;i<LP;++i)
+
+        poz[i].ile_do_splaty=poz[i].kwota;
+        for(j=0;j<poz[i].ile_m_spl;++j)
         {
-            poz[i].rata_kap=(float)poz[i].kwota/(float)poz[i].na_ile;
-            //printf("\nrata_kap[%d]=%f",i,poz[i].rata_kap);              //rata kapitalowa
-
-            pom_m=(poz[i].rok*12)+poz[i].miesiac;
-            //printf("\npom_m=%d  pom_b=%d",pom_m,pom_b);
-
-
-            poz[i].ile_m_spl = (poz[i].dzien<b_dzien) ? pom_b-pom_m:pom_b-pom_m-1;
-            //printf("\npoz[%d].ile_m_spl=%d",i,poz[i].ile_m_spl);        //ile miesiecy juz splacono
-
-
-            poz[i].ile_do_splaty=poz[i].kwota;
-            for(j=0;j<poz[i].ile_m_spl;++j)
-            {
-                poz[i].odsetki=poz[i].ile_do_splaty*(poz[i].procent/12);
-                poz[i].rata_lacz=poz[i].rata_kap+poz[i].odsetki;
-                poz[i].ile_do_splaty=poz[i].ile_do_splaty-poz[i].rata_kap;
-            }
-            //printf("\npoz[%d].ile_do_splaty=%f",i,poz[i].ile_do_splaty);    //ile jest jeszcze zadluzony     mozna dolozyc jeszce if <0  ==>  tzn nie zwraca nadplaty
-            //system("pause");
+            poz[i].odsetki=poz[i].ile_do_splaty*(poz[i].procent/12);
+            poz[i].rata_lacz=poz[i].rata_kap+poz[i].odsetki;
+            poz[i].ile_do_splaty=poz[i].ile_do_splaty-poz[i].rata_kap;
         }
+        //printf("\npoz[%d].ile_m_spl=%d",i,poz[i].ile_m_spl);    //ile jest jeszcze zadluzony     mozna dolozyc jeszce if <0  ==>  tzn nie zwraca nadplaty
+        //system("pause");
     }
-    return pom;
+}
+
+void data ()
+{
+//    printf("\n\tPodaj dzisiejsza date:");
+//    printf("\n\tRok:");
+//    fflush(stdin);
+//    scanf("%d",&b_rok);
+//    printf("\n\tMiesiac:");
+//    fflush(stdin);
+//    scanf("%d",&b_miesiac);
+//    printf("\n\tDzien:");
+//    fflush(stdin);
+//    scanf("%d",&b_dzien);
+        b_rok=2017;
+        b_miesiac=04;
+        b_dzien=20;
+
 }
 
 void delay(unsigned int mseconds)
@@ -1164,6 +1231,8 @@ fscanf(g,"%f",&poz[i].procent);
 //printf("\n%.2f",poz[i].procent);
 }
 fclose(g);
+data();
+oblicz();
 
 system("cls");
 menu();
