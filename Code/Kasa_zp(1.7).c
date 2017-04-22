@@ -32,8 +32,8 @@ int znajdz();                   //znajduje klienta o danym numerze pozyczki
 void delay();                   //upiekszanie
 
 
-int b_rok,b_miesiac,b_dzien;    //biezaca data          DO ULEPSZENIA
-int i,j,k,l;                    //zmienne pomocnicze
+int b_rok,b_miesiac,b_dzien;    //biezaca data
+int i;                          //zmienna pomocnicza
 int LK;                         //liczba klientow
 int LP;                         //liczba pozyczek
 
@@ -59,21 +59,21 @@ float dlug;
 
 typedef struct                  //struktura do obslugi pozyczek
 {
-int numer;                 //numer pozyczki
+int numer;                      //numer pozyczki
 int kwota;
 int rok;
 int miesiac;
 int dzien;
-int na_ile;                //na ile miesiecy
-float procent;             //w skali roku
+int na_ile;                     //na ile miesiecy
+float procent;                  //w skali roku
 
-int ile_m_spl;                  //ile miesiecy juz splacono     nie wprowadzana         potrzebne zeby sprawdzic kto konczy splacac w tym miesiacu
+int ile_m_spl;                  //ile miesiecy juz splacono
 int ile_m_do_spl;               //ile miesiecy pozostalo do splaty
 float ile_do_splaty;            //do sprawdzania ile zadluzony jest klient
 
-float rata_kap;                 //rata kapitalowa               nie wprowadzana         po co?
-float odsetki;                  //                                                      po co?
-float rata_lacz;                //rata laczna (w tym miesiacu)  nie wprowadzana         po co?
+float rata_kap;                 //rata kapitalowa
+float odsetki;
+float rata_lacz;                //rata laczna
 }bank;
 
 osoba klient[2000];
@@ -83,7 +83,7 @@ bank poz[10000];
 //void glowne
 void baza_k(void)
 {
-    char choice2;               //case 1
+    char choice2;
 
     system("cls");
     for(i=0;i<LK;++i)
@@ -319,7 +319,7 @@ void mod_klienta(void)
 void dodaj_klienta(void)
 {
     int pes=0,dow=0,kod=0,nr=1,pom;          //zero = true
-    char dalej;                     //czy chcesz pobrac kolejne pozyczki
+    char dalej;                              //czy chcesz pobrac kolejne pozyczki
     ++LK;
     klient[LK-1].ident=klient[LK-2].ident+1;
     system("cls");
@@ -581,7 +581,7 @@ void dodaj_klienta(void)
 
 void usun_klienta(void)
 {
-    int klient_out;
+    int klient_out,l;
     char choice4;
     printf("\n\tPodaj numer klienta: ");
     fflush(stdin);
@@ -629,7 +629,7 @@ void usun_klienta(void)
                                printf("\n\nLK=%d\n\n",LK);
                             }
                     }
-
+                    LP=LP-5;
                 }
             system("cls");
 
@@ -648,7 +648,7 @@ void baza_p(void)
     printf("\tNa ile");
     printf("\tNa jaki procent");
     for (i=0;i<LP;++i)
-    {                                       //jesli gdzies w srodku 0 znaczy blad wczytywania
+    {
         printf("\n\n\t%d",poz[i].numer);
         printf("\t%d",poz[i].kwota);
 
@@ -781,7 +781,7 @@ void zadluzenie(void)
 void zapisz (void)
 {
     FILE *z;
-    z=fopen("baza.txt","w");
+    z=fopen("osoba.txt","w");
     fprintf(z,"%d",LK);
 
     for(i=0;i<LK;++i)
@@ -807,7 +807,7 @@ void zapisz (void)
 void zapisz_p (void)
 {
     FILE *z;
-    z=fopen("bank.txt","w");
+    z=fopen("p.txt","w");
     fprintf(z,"%d",LP);
 
     for(i=0;i<LP;++i)
@@ -830,7 +830,7 @@ void menu(void)
 
     do
     {
-        printf("\n(1)	Wyswietl baze klientow");
+        printf("\n\n(1)	Wyswietl baze klientow");
         printf("\n(2)	Modyfikuj dane klienta");
         printf("\n(3)	Dodaj klienta");
         printf("\n(4)	Usun klienta");
@@ -1067,7 +1067,7 @@ int pesel_check (char *x)
     return check;                       //jesli zwraca 0 to znaczy ze sprawdzany pesel jest poprawny (pod katem daty)
 }
 
-int dowod_check (char *x)  //hahahaha http://www.algorytm.org/numery-identyfikacyjne/numer-dowodu-osobistego.html
+int dowod_check (char *x)
 {
     int check;          //zero = true
     int suma_k=0;
@@ -1102,7 +1102,7 @@ int dowod_check (char *x)  //hahahaha http://www.algorytm.org/numery-identyfikac
     return check;       //zero = true
 }
 
-void ulica_correct (char *x)            //numer?
+void ulica_correct (char *x)
 {
     int j;
 
@@ -1127,7 +1127,7 @@ void ulica_correct (char *x)            //numer?
 
 }
 
-int kod_check (char *x)  //do testu
+int kod_check (char *x)
 {
     int check;          //zero = true
     int suma_k=0;
@@ -1188,7 +1188,7 @@ int alfabet (char *x,char *y)
 
 void oblicz (void)
 {
-    int pom_m,pom_b;      //pomocniczna liczba miesiecy / ile miesiecy teraz
+    int pom_m,pom_b;        //pomocniczna liczba miesiecy / ile miesiecy teraz
     pom_b=(b_rok*12)+b_miesiac;
 
     int i,j;
@@ -1219,19 +1219,19 @@ void oblicz (void)
 
 void data (void)
 {
-//    printf("\n\tPodaj dzisiejsza date:");
-//    printf("\n\tRok:");
-//    fflush(stdin);
-//    scanf("%d",&b_rok);
-//    printf("\n\tMiesiac:");
-//    fflush(stdin);
-//    scanf("%d",&b_miesiac);
-//    printf("\n\tDzien:");
-//    fflush(stdin);
-//    scanf("%d",&b_dzien);
-        b_rok=2017;
-        b_miesiac=04;
-        b_dzien=22;
+    printf("\n\tPodaj dzisiejsza date:");
+    printf("\n\tRok:");
+    fflush(stdin);
+    scanf("%d",&b_rok);
+    printf("\n\tMiesiac:");
+    fflush(stdin);
+    scanf("%d",&b_miesiac);
+    printf("\n\tDzien:");
+    fflush(stdin);
+    scanf("%d",&b_dzien);
+//    b_rok=2017;
+//    b_miesiac=04;
+//    b_dzien=22;
 
 }
 
@@ -1262,16 +1262,16 @@ void delay(unsigned int mseconds)
 
 int main (void)
 {
-//printf("Loading data");                     //fun
-//delay(1000);printf("\n\a.");delay(1000);printf("\n\a.");delay(1000);printf("\n\a.");delay(1000);
-//printf("\nInitializing");
-//delay(1000);printf("\n.");delay(1000);printf("\n.");delay(1000);printf("\n.");delay(1000);
-//system("cls");delay(1000);
+printf("Loading data");                     //fun
+delay(1000);printf("\n\a.");delay(1000);printf("\n\a.");delay(1000);printf("\n\a.");delay(1000);
+printf("\nInitializing");
+delay(1000);printf("\n.");delay(1000);printf("\n.");delay(1000);printf("\n.");delay(1000);
+system("cls");delay(1000);
 
 FILE *f;
-f=fopen("baza.txt","r");     //osoba.txt            //przerobic na funkcje
+f=fopen("osoba.txt","r");
 FILE *g;
-g=fopen("bank.txt","r");     //p.txt
+g=fopen("p.txt","r");
 
 fscanf(f,"%d",&LK);
 fscanf(g,"%d",&LP);
@@ -1309,7 +1309,7 @@ fscanf(f,"%d",&klient[i].numer5);
 }
 fclose(f);
 for (i=0;i<LP;++i)
-{                                       //jesli gdzies w srodku 0 znaczy blad wczytywania
+{
 fscanf(g,"%d",&poz[i].numer);
 //printf("\n\n%d",poz[i].numer);
 fscanf(g,"%d",&poz[i].kwota);
