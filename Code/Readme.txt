@@ -14,3 +14,5 @@ Kasa_zp(1.5).c  ==> -||-, można wyswietlać listę klientów posortowaną alfab
                     
 Kasa_zp(1.6).c  ==> dodane operacje na strukturze pożyczek, funkcje uzupełnione o korelacje pomiędzy dwoma strukturami 
                     (możliwa niezgodność odczytu z poprzednimi wersjami-{nie sprawdzone})
+                    
+Kasa_zp(1.7).c  ==> 1337
