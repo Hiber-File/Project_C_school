@@ -842,7 +842,7 @@ void menu(void)
         printf("\n(10)	Zapisz");
         printf("\n(11)	Zapisz i zakoncz");
         printf("\n(12)	Zakoncz");
-        printf("\n\tPodaj numer: ");
+        printf("\n\n\tPodaj numer: ");
         fflush(stdin);
         scanf("%d",&choice);
 
